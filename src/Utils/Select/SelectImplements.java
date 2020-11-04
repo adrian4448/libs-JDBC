@@ -6,10 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import Utils.SharedUtils.Methods;
 
 public class SelectImplements implements SelectInterface {
     
     Connection con = DB.getConnection();
+    Methods utilsShared = new Methods();
     
     @Override
     public ResultSet findAll(String table) throws Exception {
@@ -35,7 +37,7 @@ public class SelectImplements implements SelectInterface {
         StringBuilder sb = new StringBuilder();
         PreparedStatement st = null;
         ResultSet rs = null;
-        String primaryKey = findPrimaryKey(table);
+        String primaryKey = utilsShared.findPrimaryKey(table);
         
         sb.append("SELECT * FROM ");       
         sb.append(table);
@@ -47,28 +49,5 @@ public class SelectImplements implements SelectInterface {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return rs;
-    }
-    
-    protected String findPrimaryKey(String table) {
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        String columnName = "";
-        try {
-            st = con.prepareStatement("SELECT * " +
-                                      "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE " +
-                                      "WHERE TABLE_NAME = ? " +
-                                      "AND CONSTRAINT_NAME = 'PRIMARY' ");
-            st.setString(1, table);
-            
-            rs = st.executeQuery();
-            
-            while(rs.next()) {
-                columnName = rs.getString("COLUMN_NAME");
-            }
-        }catch(SQLException e) {
-            e.getMessage();
-        }
-        return columnName;
-    }
-    
+    } 
 }
