@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 public class Methods {
     
@@ -27,7 +28,7 @@ public class Methods {
                 columnName = rs.getString("COLUMN_NAME");
             }
         } catch (SQLException e) {
-            e.getMessage();
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return columnName;
     }

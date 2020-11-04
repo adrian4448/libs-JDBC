@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Utils.SharedUtils.Methods;
+import java.util.HashMap;
 
 public class SelectImplements implements SelectInterface {
     
@@ -26,28 +27,30 @@ public class SelectImplements implements SelectInterface {
             st = con.prepareStatement(sb.toString());
             rs = st.executeQuery();
         }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
-            System.out.println(e.getMessage());
         }    
         return rs;
     }    
 
+
     @Override
-    public ResultSet findById(String table, Integer id) throws Exception {
+    public ResultSet findByFieldName(HashMap<String, Object> params, String table) {
         StringBuilder sb = new StringBuilder();
         PreparedStatement st = null;
         ResultSet rs = null;
-        String primaryKey = utilsShared.findPrimaryKey(table);
         
         sb.append("SELECT * FROM ");       
         sb.append(table);
-        sb.append(" WHERE ").append(primaryKey).append(" = ").append(id);
+        sb.append(" WHERE ").append(params.get("NOME_ATRIBUTO")).append(" = ");
+        sb.append(" '" + params.get("VALOR_ATRIBUTO") + "' ");
         try {
             st = con.prepareStatement(sb.toString());           
             rs = st.executeQuery();       
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println(e.getStackTrace());
         }
         return rs;
-    } 
+    }
 }
