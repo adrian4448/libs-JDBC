@@ -20,7 +20,7 @@ public class DeleteImplements implements DeleteInterface{
         sql.append(" DELETE FROM ");
         sql.append(table);
         sql.append(" WHERE ");
-        sql.append(utilsShared.findPrimaryKey(table));
+        sql.append(utilsShared.findPrimaryKeyName(table));
         sql.append(" = ");
         sql.append(id);
         
