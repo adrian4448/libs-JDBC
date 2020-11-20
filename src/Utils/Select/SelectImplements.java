@@ -31,7 +31,6 @@ public class SelectImplements implements SelectInterface {
             System.out.println(e.getStackTrace());
         }finally {
             DB.closeStatement(st);
-            DB.closeResultSet(rs);
         }    
         return rs;
     }    
@@ -55,7 +54,6 @@ public class SelectImplements implements SelectInterface {
             System.out.println(e.getStackTrace());
         }finally {
             DB.closeStatement(st);
-            DB.closeResultSet(rs);
         }
         return rs;
     }

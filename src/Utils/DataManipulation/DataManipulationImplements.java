@@ -44,7 +44,6 @@ public class DataManipulationImplements implements DataManipulationInterface{
             System.out.println(e.getStackTrace());
         }finally {
             DB.closeStatement(st);
-            DB.closeResultSet(rs);
         }
     }
 
@@ -73,7 +72,6 @@ public class DataManipulationImplements implements DataManipulationInterface{
             System.out.println(e.getStackTrace());
         }finally {
             DB.closeStatement(st);
-            DB.closeResultSet(rs);
         }
     }
     
