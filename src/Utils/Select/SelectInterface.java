@@ -5,6 +5,6 @@ import java.util.HashMap;
 
 public interface SelectInterface {
     
-    ResultSet findAll(String table) throws Exception;
+    ResultSet findAll(String table);
     ResultSet findByFieldName(HashMap<String, Object> params, String table);
 }

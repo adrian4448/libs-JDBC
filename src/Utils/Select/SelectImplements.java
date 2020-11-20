@@ -15,20 +15,23 @@ public class SelectImplements implements SelectInterface {
     Methods utilsShared = new Methods();
     
     @Override
-    public ResultSet findAll(String table) throws Exception {
-        StringBuilder sb = new StringBuilder();
+    public ResultSet findAll(String table) {
+        StringBuilder sql = new StringBuilder();
         PreparedStatement st = null;
         ResultSet rs = null;
         
-        sb.append("SELECT * FROM ");
-        sb.append(table);    
+        sql.append("SELECT * FROM ");
+        sql.append(table);    
 
         try {
-            st = con.prepareStatement(sb.toString());
+            st = con.prepareStatement(sql.toString());
             rs = st.executeQuery();
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }    
         return rs;
     }    
@@ -36,20 +39,23 @@ public class SelectImplements implements SelectInterface {
 
     @Override
     public ResultSet findByFieldName(HashMap<String, Object> params, String table) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sql = new StringBuilder();
         PreparedStatement st = null;
         ResultSet rs = null;
         
-        sb.append("SELECT * FROM ");       
-        sb.append(table);
-        sb.append(" WHERE ").append(params.get("NOME_ATRIBUTO")).append(" = ");
-        sb.append(" '" + params.get("VALOR_ATRIBUTO") + "' ");
+        sql.append("SELECT * FROM ");       
+        sql.append(table);
+        sql.append(" WHERE ").append(params.get("NOME_ATRIBUTO")).append(" = ");
+        sql.append(" '" + params.get("VALOR_ATRIBUTO") + "' ");
         try {
-            st = con.prepareStatement(sb.toString());           
+            st = con.prepareStatement(sql.toString());           
             rs = st.executeQuery();       
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
         return rs;
     }

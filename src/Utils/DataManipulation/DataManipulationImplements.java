@@ -41,6 +41,10 @@ public class DataManipulationImplements implements DataManipulationInterface{
             st.executeUpdate();
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println(e.getStackTrace());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 
@@ -66,6 +70,10 @@ public class DataManipulationImplements implements DataManipulationInterface{
             st.executeUpdate();
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println(e.getStackTrace());
+        }finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
     

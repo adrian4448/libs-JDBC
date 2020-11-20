@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import Connection.DB;
 import Utils.SharedUtils.Methods;
+import java.util.HashMap;
 
 public class DeleteImplements implements DeleteInterface{
 
@@ -13,16 +14,16 @@ public class DeleteImplements implements DeleteInterface{
     private Methods utilsShared = new Methods();
     
     @Override
-    public void deleteById(Integer id,String table) {
+    public void deleteByFieldName(HashMap<String, Object> params,String table) {
         StringBuilder sql = new StringBuilder();
         PreparedStatement st = null;
         
         sql.append(" DELETE FROM ");
         sql.append(table);
         sql.append(" WHERE ");
-        sql.append(utilsShared.findPrimaryKeyName(table));
-        sql.append(" = ");
-        sql.append(id);
+        params.forEach((key,value) -> {
+            sql.append(key).append(" = ").append(value);
+        });
         
         try {
             st = con.prepareStatement(sql.toString());
@@ -30,6 +31,8 @@ public class DeleteImplements implements DeleteInterface{
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
+        }finally {
+            DB.closeStatement(st);
         }
     }
 }
