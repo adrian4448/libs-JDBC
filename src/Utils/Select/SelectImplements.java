@@ -29,9 +29,7 @@ public class SelectImplements implements SelectInterface {
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
-        }finally {
-            DB.closeStatement(st);
-        }    
+        }
         return rs;
     }    
 
@@ -44,16 +42,17 @@ public class SelectImplements implements SelectInterface {
         
         sql.append("SELECT * FROM ");       
         sql.append(table);
-        sql.append(" WHERE ").append(params.get("NOME_ATRIBUTO")).append(" = ");
-        sql.append(" '" + params.get("VALOR_ATRIBUTO") + "' ");
+        sql.append(" WHERE ");
+        params.forEach((key,value) -> {
+            sql.append(key).append(" = ").append(" '"+ value +"' ");
+        });
+        
         try {
             st = con.prepareStatement(sql.toString());           
             rs = st.executeQuery();       
         }catch(SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println(e.getStackTrace());
-        }finally {
-            DB.closeStatement(st);
         }
         return rs;
     }
