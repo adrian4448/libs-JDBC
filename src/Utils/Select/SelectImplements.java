@@ -56,4 +56,24 @@ public class SelectImplements implements SelectInterface {
         }
         return rs;
     }
+
+    @Override
+    public ResultSet selectWithWhere(StringBuilder where, String table) {
+        StringBuilder sql = new StringBuilder();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        
+        sql.append("SELECT * FROM ");       
+        sql.append(table);
+        sql.append(" WHERE ");
+        sql.append(where);
+        try {
+            st = con.prepareStatement(sql.toString());           
+            rs = st.executeQuery();
+        }catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            System.out.println(e.getStackTrace());
+        }
+        return rs;
+    }
 }

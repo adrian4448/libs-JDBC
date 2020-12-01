@@ -7,4 +7,5 @@ public interface SelectInterface {
     
     ResultSet findAll(String table);
     ResultSet findByFieldName(HashMap<String, Object> params, String table);
+    ResultSet selectWithWhere(StringBuilder where, String table);
 }
